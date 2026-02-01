@@ -1,6 +1,6 @@
 # simple_ctx_log
 
-[![PyPI - Version](https://img.shields.io/pypi/v/simple_ctx_log)](https://pypi.org/project/simple_ctx_log)
+[![PyPI - Version](https://img.shields.io/pypi/v/simple_ctx_log)](https://pypi.org/project/simple-ctx-log)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/simple_ctx_log)](https://pypi.org/project/simple_ctx_log)
 
 
