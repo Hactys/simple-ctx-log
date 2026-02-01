@@ -1,8 +1,10 @@
 import sys
 import datetime
 import threading
-from types import FrameType
 import contextvars
+from types import FrameType
+
+from .signer import LogSigner
 
 
 _logical_context_var: contextvars.ContextVar[list[dict]] = contextvars.ContextVar(
@@ -36,6 +38,7 @@ class Logger:
         "log_file",
         "stdout",
         "_write_lock",
+        "_signer",
     )
 
     def __init__(
@@ -47,6 +50,7 @@ class Logger:
         max_depth: int = -1,
         log_file: str | None = None,
         stdout: bool = True,
+        signing_key: bytes | None = None,
     ):
         self.name = name or "NamelessLogger"
         self.log_args = log_args
@@ -56,6 +60,7 @@ class Logger:
         self.log_file = log_file
         self.stdout = stdout
         self._write_lock = threading.Lock()
+        self._signer = LogSigner(signing_key)
 
     def push_context(self, entry: dict) -> None:
         """
@@ -366,9 +371,11 @@ class Logger:
         return "\n".join(lines)
 
     def _output(self, formatted_message: str) -> None:
+        signature = self._signer.sign(formatted_message)
+        formatted_message = formatted_message + "\n" + f"[hash={signature}]"
         with self._write_lock:
             if self.stdout:
-                print(formatted_message)
+                sys.stdout.write(formatted_message + "\n")
             if self.log_file:
                 self._write_to_file(formatted_message)
 

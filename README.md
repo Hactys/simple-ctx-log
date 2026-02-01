@@ -128,6 +128,7 @@ Logger(
     max_depth: int | None = None,
     log_file: str | None = None,
     stdout: bool = True,
+    signing_key: bytes | None = None
 )
 ```
 
@@ -140,6 +141,7 @@ Logger(
 | `max_depth`         | Maximum depth for call stack + object traversal |
 | `log_file`          | optional file in which to write logs            |
 | `stdout`            | Print logs                                      |
+| `signing_key`       | Hash key                                        |
 
 ### Module boundary safety
 
