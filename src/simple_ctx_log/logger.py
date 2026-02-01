@@ -1,10 +1,3 @@
-"""
-deep_logger.py
-
-Logger haute performance basé sur sys._getframe
-Aucune dépendance externe
-"""
-
 import sys
 import datetime
 import threading
